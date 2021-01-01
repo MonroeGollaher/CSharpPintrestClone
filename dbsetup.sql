@@ -1,0 +1,4 @@
+-- CREATE TABLE test(
+--   test VARCHAR(255)
+-- )
+-- DROP TABLE test
