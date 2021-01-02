@@ -7,11 +7,15 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { AppState } from '../AppState'
+import { keepsService } from '../services/KeepsService'
 export default {
   name: 'Profile',
   setup() {
+    onMounted(async() => {
+      await keepsService.getKeeps()
+    })
     return {
       profile: computed(() => AppState.profile)
     }
