@@ -1,5 +1,5 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center container-fluid">
     <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
   </div>
 </template>
