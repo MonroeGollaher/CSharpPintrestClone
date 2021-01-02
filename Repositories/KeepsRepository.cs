@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using keepr.Models;
@@ -24,10 +25,57 @@ namespace keepr.Repositories
       return _db.ExecuteScalar<int>(sql, newKeep);
     }
 
+
+    internal Keep GetKeepById(int id)
+    {
+      string sql = @"
+      SELECT * FROM keeps
+      WHERE id = @Id
+      LIMIT 1";
+      return _db.QueryFirstOrDefault<Keep>(sql, new { id });
+    }
+
     internal object GetKeeps()
     {
       string sql = populateCreator;
       return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, splitOn: "id");
+    }
+
+    internal void EditKeep(Keep editedKeep)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET
+      name = @Name,
+      description = @Description,
+      image = @Image,
+      views = @Views,
+      shares = @Shares,
+      keeps = @Keeps
+      WHERE id = @Id;";
+      _db.ExecuteScalar(sql, editedKeep);
+    }
+
+    internal IEnumerable<Keep> GetKeepsByProfile(string profId)
+    {
+      string sql = @"
+      SELECT keep.*,
+      p.*
+      FROM keeps keep
+      JOIN profiles p
+      ON keep.creatorId = p.id
+      WHERE keep.creatorId = @profId;";
+      return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { profId }, splitOn: "id");
+    }
+
+    internal bool DeleteKeep(int id)
+    {
+      string sql = @"
+      DELETE FROM keeps
+      WHERE id = @Id
+      LIMIT 1";
+      int affectedRows = _db.Execute(sql, new { id });
+      return affectedRows > 0;
     }
   }
 }
