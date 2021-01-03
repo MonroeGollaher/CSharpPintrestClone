@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using keepr.Models;
@@ -58,6 +59,18 @@ namespace keepr.Repositories
       WHERE id = @Id
       LIMIT 1";
       return _db.QueryFirstOrDefault<Vault>(sql, new { id });
+    }
+
+    internal IEnumerable<Vault> GetVaultsByProfile(string profId)
+    {
+      string sql = @"
+      SELECT vault.*,
+      p.*
+      FROM vaults vault
+      JOIN profiles p
+      ON vault.creatorId = p.id
+      WHERE vault.creatorId = @profId;";
+      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, new { profId }, splitOn: "id");
     }
   }
 }

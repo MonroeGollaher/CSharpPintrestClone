@@ -53,5 +53,10 @@ namespace keepr.Services
       _repo.EditVault(editedVault);
       return _repo.GetVaultById(editedVault.Id);
     }
+
+    internal object GetVaultsByProfile(string profId, string userId)
+    {
+      return _repo.GetVaultsByProfile(profId).ToList().FindAll(v => v.CreatorId == userId);
+    }
   }
 }
