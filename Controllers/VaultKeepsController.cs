@@ -48,5 +48,53 @@ namespace keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("{id}")]
+
+        public ActionResult<IEnumerable<VaultKeep>> GetById(int id)
+        {
+            try
+            {
+                return Ok(_vks.GetKeepById(id));
+            }
+            catch (System.Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+
+        
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<string>> DeleteVaultKeep(int id)
+        {
+            try
+            {
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                return Ok(_vks.DeleteVaultKeep(id, userInfo));
+            }
+            catch (System.Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+        
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<ActionResult<VaultKeep>> EditVaultKeep(int id, [FromBody] VaultKeep editedVaultKeep)
+        {
+            try
+            {
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                editedVaultKeep.Id = id;
+                return Ok(_vks.EditVaultKeep(editedVaultKeep, userInfo));
+            }
+            catch (System.Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+
     }
 }

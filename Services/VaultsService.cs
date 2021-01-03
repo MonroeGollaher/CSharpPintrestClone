@@ -28,11 +28,13 @@ namespace keepr.Services
       return _repo.GetVaultById(id);
     }
 
-    internal string DeleteVault(int id)
+    internal string DeleteVault(int id, Profile userInfo)
     {
-      if(_repo.DeleteVault(id))
+      Vault toDelete = _repo.GetVaultById(id);
+      if(toDelete.CreatorId == userInfo.Id)
       {
-          return "The Vault has been deleted";
+        _repo.DeleteVault(id);
+        return "The Vault has been deleted";
       }
       return "The Vault could not be deleted";
     }

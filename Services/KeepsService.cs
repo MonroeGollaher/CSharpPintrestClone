@@ -28,11 +28,13 @@ namespace keepr.Services
       return _repo.GetKeepById(id);
     }
 
-    internal string DeleteKeep(int id)
+    internal string DeleteKeep(int id, Profile userInfo)
     {
-      if(_repo.DeleteKeep(id))
+      Keep toDelete = _repo.GetKeepById(id);
+      if(toDelete.CreatorId == userInfo.Id)
       {
-          return "The Keep has been deleted";
+        _repo.DeleteKeep(id);
+        return "The Keep has been deleted";
       }
       return "The Keep could not be deleted";
     }
