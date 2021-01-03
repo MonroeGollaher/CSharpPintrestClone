@@ -24,6 +24,7 @@ class KeepsService {
 
   async addKeep(keepData) {
     try {
+      debugger
       await api.post('api/keeps', keepData)
       this.getKeeps()
     } catch (error) {

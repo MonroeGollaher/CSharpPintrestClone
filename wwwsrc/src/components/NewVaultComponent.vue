@@ -1,7 +1,7 @@
 <template>
   <div class="new-vault-component container-fluid">
     <button class="btn border-0 bg-transparent rounded" data-toggle="modal" data-target="#newListModal">
-      <h5>Vaults<i class="fas fa-plus ml-2 keeprGreen"></i></h5>
+      <h5>Vaults <i class="fas fa-plus ml-2 keeprGreen"></i></h5>
     </button>
     <div class="modal" id="newListModal" tabindex="-1">
       <div class="modal-dialog">

@@ -1,5 +1,5 @@
 <template>
-  <div class="vaults-component col-4 shadow card container-fluid">
+  <div class="vaults-component col-2 shadow card container-fluid">
     <h5>{{ vault.title }}</h5>
   </div>
 </template>
