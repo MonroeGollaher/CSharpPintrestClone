@@ -12,9 +12,18 @@ class VaultsService {
     }
   }
 
+  async getUserVaults() {
+    try {
+      // @ts-ignore
+      const res = await api.get(`api/profile/${AppState.profile.id}/vaults`)
+      AppState.userVaults = res.data
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
   async createVault(vaultData) {
     try {
-      debugger
       await api.post('api/vaults', vaultData)
       console.log(vaultData)
       this.getVaults()
@@ -23,7 +32,7 @@ class VaultsService {
     }
   }
 
-  async deleteVailt(id) {
+  async deleteVault(id) {
     try {
       await api.delete('api/vaults/' + id)
       this.getVaults()
@@ -43,7 +52,7 @@ class VaultsService {
 
   async setActiveVault(vaultId) {
     try {
-      const res = await api.get('api/vaults', vaultId)
+      const res = await api.get('api/vaults/' + vaultId)
       AppState.activeVault = res.data
     } catch (error) {
       logger.error(error)

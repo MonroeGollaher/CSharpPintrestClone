@@ -15,8 +15,8 @@ class KeepsService {
   async getUserKeeps() {
     try {
       // @ts-ignore
-      const res = await api.get(`profile/${AppState.profile.id}/keeps`)
-      AppState.userKeeps = res.data
+      const res = await api.get(`api/profile/${AppState.profile.id}/keeps`)
+      AppState.keeps = res.data
     } catch (error) {
       logger.error(error)
     }

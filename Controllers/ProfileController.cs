@@ -8,7 +8,7 @@ using keepr.Models;
 namespace keepr.Controllers
 {
   [ApiController]
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   public class ProfileController : ControllerBase
   {
     private readonly ProfileService _ps;
@@ -62,6 +62,20 @@ namespace keepr.Controllers
       catch (System.Exception e)
       {
         return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Profile>> GetProfileById(string profileId)
+    {
+      try
+      {
+        return Ok(_ps.GetProfileById(profileId));
+      }
+      catch (System.Exception error)
+      {
+
+        return BadRequest(error.Message);
       }
     }
   }

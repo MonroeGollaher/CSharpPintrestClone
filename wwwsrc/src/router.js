@@ -27,6 +27,12 @@ const routes = [
     name: 'ActiveVault',
     component: loadPage('ActiveVaultPage'),
     beforeEnter: authGuard
+  },
+  {
+    path: '/activeprofile/:profileId',
+    name: 'ActiveProfile',
+    component: loadPage('ActiveProfilePage'),
+    beforeEnter: authGuard
   }
 ]
 

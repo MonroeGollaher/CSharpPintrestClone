@@ -1,7 +1,10 @@
 <template>
-  <div class="keeps-component col-2 shadow card container-fluid">
+  <div class="keeps-component col-3 shadow card container-fluid">
     <div class="keeps keepImage" :style="'background-image: url('+keep.image+')'" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
+      <img :src="keep.creator.picture" class="rounded-circle shadow" height="40">
       <h4>{{ keep.name }}</h4>
+      <div class="div card-img-overlay">
+      </div>
     </div>
   </div>
   <div class="modal fade keepModal"
@@ -88,7 +91,7 @@ export default {
     return {
       state,
       profile: computed(() => AppState.profile),
-      vaults: computed(() => AppState.vaults),
+      vaults: computed(() => AppState.vaults.filter(v => v.creatorId === AppState.profile.id)),
       keep: computed(() => props.keepsProp),
       setActiveKeep(keepId) {
         keepsService.setActiveKeep(keepId)
