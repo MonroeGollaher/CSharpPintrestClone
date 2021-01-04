@@ -22,9 +22,19 @@ class KeepsService {
     }
   }
 
+  async getKeepsByProfile(id) {
+    try {
+      // debugger
+      const res = await api.get('api/profile/' + id + '/keeps')
+      console.log(res.data, 'profile keeps')
+      AppState.activeProfileKeeps = res.data
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
   async addKeep(keepData) {
     try {
-      debugger
       await api.post('api/keeps', keepData)
       this.getKeeps()
     } catch (error) {

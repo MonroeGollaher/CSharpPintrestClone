@@ -2,7 +2,9 @@
   <div class="keeps-component col-3 shadow card container-fluid">
     <div class="keeps keepImage" :style="'background-image: url('+keep.image+')'" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
       <img :src="keep.creator.picture" class="rounded-circle shadow" height="40">
-      <h4>{{ keep.name }}</h4>
+      <h4 class="text-light">
+        {{ keep.name }}
+      </h4>
       <div class="div card-img-overlay">
       </div>
     </div>
@@ -25,6 +27,9 @@
             <div class="row">
               <div class="col-12">
                 <p>{{ keep.description }}</p>
+                <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
+                  <h5>{{ keep.creator.name }}</h5>
+                </router-link>
               </div>
             </div>
 

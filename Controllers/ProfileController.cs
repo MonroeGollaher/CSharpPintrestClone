@@ -37,13 +37,13 @@ namespace keepr.Controllers
       }
     }
 
-    [HttpGet("{id}/keeps")]
-    public async Task<ActionResult<Profile>> GetKeepsByProfile(string id)
+    [HttpGet("{profileId}/keeps")]
+    public async Task<ActionResult<Profile>> GetKeepsByProfile(string profileId)
     {
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        return Ok(_ks.GetKeepsByProfile(id, userInfo?.Id));
+        return Ok(_ks.GetKeepsByProfile(profileId, userInfo?.Id));
       }
       catch (System.Exception e)
       {
@@ -65,7 +65,7 @@ namespace keepr.Controllers
       }
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{profileId}")]
     public async Task<ActionResult<Profile>> GetProfileById(string profileId)
     {
       try

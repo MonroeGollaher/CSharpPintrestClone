@@ -57,7 +57,7 @@ namespace keepr.Services
 
     internal object GetKeepsByProfile(string profId, string userId)
     {
-      return _repo.GetKeepsByProfile(profId).ToList().FindAll(k => k.CreatorId == userId);
+      return _repo.GetKeepsByProfile(profId).ToList().FindAll(k => k.CreatorId == userId || k.CreatorId == profId);
     }
   }
 }
