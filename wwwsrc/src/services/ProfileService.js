@@ -15,7 +15,7 @@ class ProfileService {
   async getActiveProfile(id) {
     try {
       const res = await api.get('api/profile/' + id)
-      console.log(res.data)
+      // console.log(res.data)
       AppState.activeProfile = res.data
     } catch (error) {
       logger.error(error)
