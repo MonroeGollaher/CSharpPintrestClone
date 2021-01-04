@@ -56,7 +56,7 @@ namespace keepr.Services
 
     internal object GetVaultsByProfile(string profId, string userId)
     {
-      return _repo.GetVaultsByProfile(profId).ToList().FindAll(v => v.CreatorId == userId);
+      return _repo.GetVaultsByProfile(profId).ToList().FindAll(v => v.CreatorId == userId || v.CreatorId == profId && v.IsPrivate == false);
     }
   }
 }

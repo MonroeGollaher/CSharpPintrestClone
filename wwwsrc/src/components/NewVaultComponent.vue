@@ -14,7 +14,7 @@
               <i class="far fa-times-circle"></i>
             </button>
           </div>
-          <form @submit.prevent="createVault" class="p-2">
+          <form @submit.prevent="createVault(state.newVault)" class="p-2">
             <div class="form-group">
               <label for="itemTitle">Title</label>
               <input type="text"
@@ -45,7 +45,7 @@
             </div>
             <div class="row justify-content-center align-items-center">
               <label for="image">Private?</label>
-              <input class="ml-3" type="checkbox">
+              <input class="ml-3" type="checkbox" v-model="state.newVault.isPrivate">
             </div>
             <div class="row justify-content-center">
               <button type="submit" class="btn keeprBtnColor mb-3 text-light">
@@ -67,13 +67,15 @@ export default {
   setup() {
     const state = reactive({
       newVault: {
-
+        title: null,
+        description: null,
+        isPrivate: false
       }
     })
     return {
       state,
-      createVault() {
-        vaultsService.createVault(state.newVault)
+      createVault(newVault) {
+        vaultsService.createVault(newVault)
         state.newVault = {}
       }
     }

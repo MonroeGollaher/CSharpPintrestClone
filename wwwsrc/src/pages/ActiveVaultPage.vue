@@ -1,6 +1,15 @@
 <template>
   <div class="active-vault container-fluid">
-    <h2>{{ activeVault.title }}</h2>
+    <div class="row">
+      <div class="col-4">
+        <h2>{{ activeVault.title }}</h2>
+        <div class="col-4">
+          <button v-if="profile.id == activeProfile.id" @click="removeVault(activeVault.id)">
+            <h5>Delete test</h5>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <vault-keeps-component v-for="ak in activeKeeps" :key="ak.id" :vault-keep-prop="ak" />
     </div>
@@ -10,20 +19,28 @@
 <script>
 import { computed, onMounted } from 'vue'
 import { vaultKeepsService } from '../services/VaultKeepsService'
+import { vaultsService } from '../services/VaultsService'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
 import VaultKeepsComponent from '../components/VaultKeepsComponent'
+import { profileService } from '../services/ProfileService'
 export default {
   name: 'ActiveVault',
   components: { VaultKeepsComponent },
   setup() {
     const route = useRoute()
     onMounted(() => {
+      profileService.getActiveProfile()
       vaultKeepsService.getActiveVaultKeeps(route.params.vaultId)
     })
     return {
+      profile: computed(() => AppState.profile),
+      activeProfile: computed(() => AppState.activeProfile),
       activeVault: computed(() => AppState.activeVault),
-      activeKeeps: computed(() => AppState.activeVaultKeeps)
+      activeKeeps: computed(() => AppState.activeVaultKeeps),
+      removeVault(vaultId) {
+        vaultsService.deleteVault(vaultId)
+      }
     }
   }
 }
