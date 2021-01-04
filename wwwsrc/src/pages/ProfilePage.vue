@@ -43,10 +43,14 @@ import { vaultsService } from '../services/VaultsService'
 import NewVaultComponent from '../components/NewVaultComponent'
 import VaultsComponent from '../components/VaultsComponent'
 import NewKeepComponent from '../components/NewKeepComponent'
+// import { profileService } from '../services/ProfileService'
+// import { useRoute } from 'vue-router'
+
 export default {
   name: 'Profile',
   components: { NewVaultComponent, VaultsComponent, NewKeepComponent },
   setup() {
+    // const route = useRoute()
     onMounted(async() => {
       await keepsService.getKeeps()
       await vaultsService.getVaults()
@@ -55,6 +59,7 @@ export default {
       vaults: computed(() => AppState.vaults.filter(v => v.creatorId === AppState.profile.id)),
       keeps: computed(() => AppState.keeps.filter(k => k.creatorId === AppState.profile.id)),
       profile: computed(() => AppState.profile)
+      // activeProfile: computed(() => AppState.activeProfile)
     }
   }
 }

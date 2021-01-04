@@ -56,7 +56,7 @@ namespace keepr.Repositories
       _db.ExecuteScalar(sql, editedKeep);
     }
 
-    internal IEnumerable<Keep> GetKeepsByProfile(string profId)
+    internal IEnumerable<Keep> GetKeepsByProfile(string profileId)
     {
       string sql = @"
       SELECT keep.*,
@@ -64,8 +64,8 @@ namespace keepr.Repositories
       FROM keeps keep
       JOIN profiles p
       ON keep.creatorId = p.id
-      WHERE keep.creatorId = @profId;";
-      return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { profId }, splitOn: "id");
+      WHERE keep.creatorId = @profileId;";
+      return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { profileId }, splitOn: "id");
     }
 
     internal bool DeleteKeep(int id)
