@@ -1,6 +1,7 @@
 using System.Data;
 using keepr.Models;
 using Dapper;
+using System;
 
 namespace keepr.Repositories
 {
@@ -29,5 +30,14 @@ namespace keepr.Repositories
             _db.Execute(sql, userInfo);
             return userInfo;
         }
+
+    internal Profile GetProfileById(string profileId)
+    {
+      string sql = @"
+      SELECT * FROM 
+      profiles
+      WHERE id = @ProfileId";
+      return _db.QueryFirstOrDefault<Profile>(sql, new { profileId });
     }
+  }
 }

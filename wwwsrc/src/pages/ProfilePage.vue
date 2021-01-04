@@ -52,8 +52,8 @@ export default {
       await vaultsService.getVaults()
     })
     return {
-      vaults: computed(() => AppState.vaults),
-      keeps: computed(() => AppState.keeps),
+      vaults: computed(() => AppState.vaults.filter(v => v.creatorId === AppState.profile.id)),
+      keeps: computed(() => AppState.keeps.filter(k => k.creatorId === AppState.profile.id)),
       profile: computed(() => AppState.profile)
     }
   }
