@@ -18,10 +18,16 @@
     </div>
     <div class="row ml-1">
       <h5>Keeps: </h5>
+      <div v-if="profile.id == activeProfile.id">
+        <new-keep-component />
+      </div>
       <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
     </div>
     <div class="row ml-1">
       <h5>Vaults: </h5>
+      <div v-if="profile.id == activeProfile.id">
+        <new-vault-component />
+      </div>
       <vaults-component v-for="v in vaults" :key="v" :vaults-prop="v" />
     </div>
   </div>
@@ -35,9 +41,11 @@ import { profileService } from '../services/ProfileService'
 import { keepsService } from '../services/KeepsService'
 import KeepsComponent from '../components/KeepsComponent'
 import { vaultsService } from '../services/VaultsService'
+import NewVaultComponent from '../components/NewVaultComponent'
+import NewKeepComponent from '../components/NewKeepComponent'
 export default {
   name: 'ActiveProfilePage',
-  components: { KeepsComponent },
+  components: { KeepsComponent, NewVaultComponent, NewKeepComponent },
   setup() {
     const route = useRoute()
     onMounted(() => {

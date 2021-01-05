@@ -27,7 +27,7 @@ namespace keepr.Controllers
                 Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
                 newVk.CreatorId = userInfo.Id;
                 VaultKeep created = _vks.CreateVaultKeep(newVk);
-                newVk.Creator = userInfo;
+                // newVk.Creator = userInfo;
                 return Ok(created);
             }
             catch (System.Exception e)
@@ -50,7 +50,6 @@ namespace keepr.Controllers
         }
 
         [HttpGet("{id}")]
-
         public ActionResult<IEnumerable<VaultKeep>> GetById(int id)
         {
             try
@@ -63,11 +62,9 @@ namespace keepr.Controllers
             }
         }
 
-        
-
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult<string>> DeleteVaultKeep(int id)
+        public async Task<ActionResult<string>> Delete(int id)
         {
             try
             {

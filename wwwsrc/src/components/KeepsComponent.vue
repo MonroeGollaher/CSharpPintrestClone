@@ -16,7 +16,7 @@
        aria-labelledby="exampleModalLabel"
        aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
       <div class="modal-content">
         <div class="row">
           <div class="col-6">
@@ -25,6 +25,15 @@
           <div class="col-6">
             <h5>{{ keep.name }}</h5>
             <div class="row">
+              <div class="col-4">
+                <p>View Count: {{ keep.views }}</p>
+              </div>
+              <div class="col-4">
+                <p>Keeps: {{ keep.keeps }}</p>
+              </div>
+              <div class="col-4">
+                <p>Shares: {{ keep.shares }}</p>
+              </div>
               <div class="col-12">
                 <p>{{ keep.description }}</p>
                 <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
@@ -61,10 +70,14 @@
               </div>
 
               <div class="col-3">
-                <i class="fas fa-trash"></i>
+                <button @click="deleteKeep(keep.id)" v-if="profile.id == keep.creatorId" class="bg-transparent border-0 text-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
               </div>
               <div class="col-3">
-                <i class="far fa-user"></i>
+                <!-- <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
+                  <h5>{{ keep.creator.name }}</h5>
+                </router-link> -->
               </div>
             </div>
           </div>
@@ -83,6 +96,7 @@ import { keepsService } from '../services/KeepsService'
 import { vaultsService } from '../services/VaultsService'
 import { vaultKeepsService } from '../services/VaultKeepsService'
 import { AppState } from '../AppState'
+import $ from 'jquery'
 export default {
   name: 'KeepsComponent',
   props: ['keepsProp'],
@@ -100,6 +114,7 @@ export default {
       keep: computed(() => props.keepsProp),
       setActiveKeep(keepId) {
         keepsService.setActiveKeep(keepId)
+        $('#activeKeepModal').modal('hide')
       },
       addToVault(vaultId, keepId) {
         const newKeep = {
@@ -107,6 +122,9 @@ export default {
           keepId: keepId
         }
         vaultKeepsService.addKeepToVault(newKeep)
+      },
+      deleteKeep(keepId) {
+        keepsService.deleteKeep(keepId)
       }
     }
   },

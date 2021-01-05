@@ -45,6 +45,7 @@ class VaultsService {
   async deleteVault(id) {
     try {
       await api.delete('api/vaults/' + id)
+      console.log('deleted')
       this.getVaults()
     } catch (error) {
       logger.error(error)

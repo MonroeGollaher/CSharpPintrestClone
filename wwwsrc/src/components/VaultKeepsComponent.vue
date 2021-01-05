@@ -2,7 +2,7 @@
   <div class="vault-keeps-component container-fluid">
     <div class="col-6 d-flex">
       <img :src="vaultKeepProp.image" class="img-fluid" />
-      <button @click="removeFromVault(vaultKeepProp.id, vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
+      <button v-if="profile.id == vaultKeepProp.creatorId" @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
         <p>Remove from vault<i class="far fa-trash-alt ml-1"></i></p>
       </button>
     </div>
@@ -12,14 +12,16 @@
 <script>
 import { computed } from 'vue'
 import { vaultKeepsService } from '../services/VaultKeepsService'
+import { AppState } from '../AppState'
 export default {
   name: 'VaultKeepsComponent',
   props: ['vaultKeepProp'],
   setup(props) {
     return {
+      profile: computed(() => AppState.profile),
       vaultKeep: computed(() => props.vaultKeepProp),
-      removeFromVault(keepId, vaultId) {
-        vaultKeepsService.removeVaultKeep(keepId, vaultId)
+      removeFromVault(vaultId) {
+        vaultKeepsService.removeVaultKeep(vaultId)
       }
     }
   },

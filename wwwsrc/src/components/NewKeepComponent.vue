@@ -1,7 +1,7 @@
 <template>
   <div class="new-keep-component container-fluid">
     <button class="btn border-0 bg-transparent rounded" data-toggle="modal" data-target="#newKeepModal">
-      <h5>Keeps <i class="fas fa-plus ml-2 keeprGreen"></i></h5>
+      <i class="fas fa-plus ml-2 keeprGreen"></i>
     </button>
     <div class="modal" id="newKeepModal" tabindex="-1">
       <div class="modal-dialog">

@@ -27,8 +27,11 @@ namespace keepr.Repositories
 
     internal object GetAllVaultKeeps()
     {
-      string sql = populateCreator;
-      return _db.Query<VaultKeep, Profile, VaultKeep>(sql, (VaultKeep, profile) => { VaultKeep.Creator = profile; return VaultKeep; }, splitOn: "id");
+      string sql = @"
+      SELECT * FROM vaultkeeps";
+      return _db.Query<VaultKeep>(sql);
+      // string sql = populateCreator;
+      // return _db.Query<VaultKeep, Profile, VaultKeep>(sql, (VaultKeep, profile) => { VaultKeep.Creator = profile; return VaultKeep; }, splitOn: "id");
     }
 
 
@@ -38,7 +41,7 @@ namespace keepr.Repositories
       SELECT * 
       FROM vaultKeeps
       WHERE id = @Id";
-      return _db.QueryFirstOrDefault(sql, new { id });
+      return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
     }
     internal object GetKeepsByVaultId(int vaultId)
     {
@@ -68,11 +71,8 @@ namespace keepr.Repositories
 
     internal bool DeleteVaultKeep(int id)
     {
-      string sql = @"
-      DELETE FROM vaultKeeps
-      WHERE id = @Id
-      LIMIT 1";
-      int affectedRows = _db.Execute(sql, new {id });
+      string sql = @"DELETE FROM vaultKeeps WHERE id = @Id LIMIT 1";
+      int affectedRows = _db.Execute(sql, new { id });
       return affectedRows > 0;
     }
   }

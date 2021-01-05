@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col-4">
         <h2>{{ activeVault.title }}</h2>
+        <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)">
+          <h5>Delete test</h5>
+        </button>
         <div class="col-4">
-          <button v-if="profile.id == activeProfile.id" @click="removeVault(activeVault.id)">
-            <h5>Delete test</h5>
-          </button>
         </div>
       </div>
     </div>
@@ -23,15 +23,14 @@ import { vaultsService } from '../services/VaultsService'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
 import VaultKeepsComponent from '../components/VaultKeepsComponent'
-import { profileService } from '../services/ProfileService'
 export default {
   name: 'ActiveVault',
   components: { VaultKeepsComponent },
   setup() {
     const route = useRoute()
     onMounted(() => {
-      profileService.getActiveProfile()
       vaultKeepsService.getActiveVaultKeeps(route.params.vaultId)
+      vaultKeepsService.getAllVaultKeeps()
     })
     return {
       profile: computed(() => AppState.profile),

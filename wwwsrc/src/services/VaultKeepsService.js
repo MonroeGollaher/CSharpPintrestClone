@@ -30,12 +30,11 @@ class VaultKeepsService {
     }
   }
 
-  async removeVaultKeep(keepId, vaultId) {
+  async removeVaultKeep(vaultId) {
     try {
+      // debugger
       await api.delete('api/vaultkeeps/' + vaultId)
-      const keep = AppState.activeVaultKeeps.findIndex(k => k.id === keepId)
-      AppState.activeVaultKeeps.splice(keep, 1)
-      this.getAllVaultKeeps()
+      this.getActiveVaultKeeps(vaultId)
     } catch (error) {
       logger.error(error)
     }
