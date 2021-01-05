@@ -24,7 +24,6 @@ class KeepsService {
 
   async getKeepsByProfile(id) {
     try {
-      // debugger
       const res = await api.get('api/profile/' + id + '/keeps')
       console.log(res.data, 'profile keeps')
       AppState.activeProfileKeeps = res.data
@@ -64,6 +63,24 @@ class KeepsService {
     try {
       const res = await api.get('api/keeps/' + keepId)
       AppState.activeKeep = res.data
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  async viewCount(keepId, keep) {
+    try {
+      await api.get('api/keeps/' + keepId)
+      keep.views++
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  async keptCount(keep, keepId) {
+    try {
+      await api.get('api/vaultkeeps/' + keepId)
+      keep.keeps++
     } catch (error) {
       logger.error(error)
     }

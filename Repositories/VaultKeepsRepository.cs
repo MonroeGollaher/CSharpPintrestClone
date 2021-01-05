@@ -20,18 +20,18 @@ namespace keepr.Repositories
       (vaultId, keepId, creatorId, id)
       VALUES
       (@VaultId, @KeepId, @CreatorId, @Id);
-      SELECT LAST_INSERT_ID();";
+      SELECT LAST_INSERT_ID()
+      UPDATE keeps 
+      SET Keeps = Keeps+1 
+      WHERE id = @KeepId;";
       return _db.ExecuteScalar<int>(sql, newVk);
     }
-
 
     internal object GetAllVaultKeeps()
     {
       string sql = @"
       SELECT * FROM vaultkeeps";
       return _db.Query<VaultKeep>(sql);
-      // string sql = populateCreator;
-      // return _db.Query<VaultKeep, Profile, VaultKeep>(sql, (VaultKeep, profile) => { VaultKeep.Creator = profile; return VaultKeep; }, splitOn: "id");
     }
 
 

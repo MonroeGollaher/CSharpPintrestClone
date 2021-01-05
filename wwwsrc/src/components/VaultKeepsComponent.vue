@@ -2,7 +2,7 @@
   <div class="vault-keeps-component container-fluid">
     <div class="col-6 d-flex">
       <img :src="vaultKeepProp.image" class="img-fluid" />
-      <button v-if="profile.id == vaultKeepProp.creatorId" @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
+      <button @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
         <p>Remove from vault<i class="far fa-trash-alt ml-1"></i></p>
       </button>
     </div>

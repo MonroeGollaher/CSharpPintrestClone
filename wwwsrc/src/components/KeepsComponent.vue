@@ -1,13 +1,22 @@
 <template>
-  <div class="keeps-component col-3 shadow card container-fluid">
-    <div class="keeps keepImage" :style="'background-image: url('+keep.image+')'" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
+  <div class="keeps-component container-fluid card" @click="viewCount(keep.id, keep)" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
+    <img class="card-img" :src="keep.image">
+    <div class="card-img-overlay d-flex justify-content-between flex-column">
+      <h4 class="card-title text-light text-center">
+        {{ keep.name }}
+      </h4>
+      <div class="d-flex justify-content-end">
+        <img :src="keep.creator.picture" class="rounded-circle creator-pic" height="40" width="40">
+      </div>
+    </div>
+    <!-- <div class="keeps keepImage" :style="'background-image: url('+keep.image+')'" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
       <img :src="keep.creator.picture" class="rounded-circle shadow" height="40">
       <h4 class="text-light">
         {{ keep.name }}
       </h4>
       <div class="div card-img-overlay">
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="modal fade keepModal"
        :id="'activeKeepModal' + keep.id"
@@ -22,8 +31,7 @@
           <div class="col-6">
             <img :src="keep.image" class="img-fluid" />
           </div>
-          <div class="col-6">
-            <h5>{{ keep.name }}</h5>
+          <div class="col-6 text-center">
             <div class="row">
               <div class="col-4">
                 <p>View Count: {{ keep.views }}</p>
@@ -35,15 +43,18 @@
                 <p>Shares: {{ keep.shares }}</p>
               </div>
               <div class="col-12">
+                <h1>{{ keep.name }}</h1>
+              </div>
+              <div class="col-12">
                 <p>{{ keep.description }}</p>
-                <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
+                <!-- <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
                   <h5>{{ keep.creator.name }}</h5>
-                </router-link>
+                </router-link> -->
               </div>
             </div>
 
             <div class="row justify-content-center">
-              <div class="col-12">
+              <div class="col-3">
                 <form @submit.prevent="addToVault(state.vaultId, keep.id)">
                   <div class="row justify-content-center">
                     <select v-model="state.vaultId"
@@ -56,7 +67,7 @@
                       <option disabled value="">
                         Select a vault
                       </option>
-                      <option v-for="v in vaults" :key="v.id" :value="v.id">
+                      <option @click="keptCount(keep, keep.id)" v-for="v in vaults" :key="v.id" :value="v.id">
                         {{ v.title }}
                       </option>
                     </select>
@@ -75,9 +86,9 @@
                 </button>
               </div>
               <div class="col-3">
-                <!-- <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
+                <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
                   <h5>{{ keep.creator.name }}</h5>
-                </router-link> -->
+                </router-link>
               </div>
             </div>
           </div>
@@ -125,6 +136,12 @@ export default {
       },
       deleteKeep(keepId) {
         keepsService.deleteKeep(keepId)
+      },
+      viewCount(keepId, keep) {
+        keepsService.viewCount(keepId, keep)
+      },
+      keptCount(keep, keepId) {
+        keepsService.keptCount(keep, keepId)
       }
     }
   },

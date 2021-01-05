@@ -1,6 +1,10 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center container-fluid">
-    <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
+  <div class="home container-fluid">
+    <div class="row pt-3">
+      <div class="card-columns">
+        <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,6 +32,8 @@ export default {
 .home{
   text-align: center;
   user-select: none;
+  margin-left: 5%;
+  margin-right: 5%;
   > img{
     height: 200px;
     width: 200px;

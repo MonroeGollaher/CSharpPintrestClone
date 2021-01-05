@@ -16,12 +16,14 @@
         </div>
       </div>
     </div>
-    <div class="row ml-1">
-      <h5>Keeps: </h5>
+    <div class="row">
+      <div class="card-columns">
+        <h5>Keeps: </h5>
+        <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
+      </div>
       <div v-if="profile.id == activeProfile.id">
         <new-keep-component />
       </div>
-      <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
     </div>
     <div class="row ml-1">
       <h5>Vaults: </h5>

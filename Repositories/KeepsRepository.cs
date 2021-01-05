@@ -29,6 +29,9 @@ namespace keepr.Repositories
     internal Keep GetKeepById(int id)
     {
       string sql = @"
+      UPDATE keeps 
+      SET views = views+1 
+      WHERE id = @Id;
       SELECT * FROM keeps
       WHERE id = @Id
       LIMIT 1";
