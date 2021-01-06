@@ -18,6 +18,7 @@
       </div>
     </div> -->
   </div>
+
   <div class="modal fade keepModal"
        :id="'activeKeepModal' + keep.id"
        tabindex="-1"
@@ -25,35 +26,45 @@
        aria-labelledby="exampleModalLabel"
        aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-      <div class="modal-content">
-        <div class="row">
+    <div class="modal-dialog modal-dialog-centered modal-lg h-100" role="document">
+      <div class="modal-content row flex-row">
+        <div class="row justify-content-center w-100">
           <div class="col-6">
-            <img :src="keep.img" class="img-fluid" />
+            <img :src="keep.img" class="img-fluid p-2" />
           </div>
           <div class="col-6 text-center">
-            <div class="row">
-              <div class="col-4">
-                <p>View Count: {{ keep.views }}</p>
+            <div class="row justify-content-end">
+              <div class="col">
+                <i class="far fa-times-circle close mt-3 text-danger" data-dismiss="modal" aria-label="Close" type="button"></i>
               </div>
-              <div class="col-4">
-                <p>Keeps: {{ keep.keeps }}</p>
+            </div>
+            <div class="row justify-content-center mb-1">
+              <div class="col-3">
+                <h4 class="keeprGreen">
+                  <i class="far fa-eye"> {{ keep.views }}</i>
+                </h4>
               </div>
-              <div class="col-4">
-                <p>Shares: {{ keep.shares }}</p>
+              <div class="col-3">
+                <h4 class="keeprGreen">
+                  <i class="fab fa-kaggle"> {{ keep.keeps }}</i>
+                </h4>
               </div>
+              <div class="col-3">
+                <h4 class="keeprGreen">
+                  <i class="fas fa-share-alt"> {{ keep.shares }}</i>
+                </h4>
+              </div>
+            </div>
+            <div class="row justify-content-between">
               <div class="col-12">
                 <h1>{{ keep.name }}</h1>
               </div>
               <div class="col-12">
                 <p>{{ keep.description }}</p>
-                <!-- <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
-                  <h5>{{ keep.creator.name }}</h5>
-                </router-link> -->
               </div>
             </div>
 
-            <div class="row justify-content-center">
+            <div class="row justify-content-center p-5">
               <div class="col-3">
                 <form @submit.prevent="addToVault(state.vaultId, keep.id)">
                   <div class="row justify-content-center">
@@ -87,15 +98,12 @@
               </div>
               <div class="col-3">
                 <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
-                  <h5>{{ keep.creator.name }}</h5>
+                  <img :src="keep.creator.picture" class="rounded-circle img-fluid" />
                 </router-link>
               </div>
             </div>
           </div>
         </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
     </div>
   </div>

@@ -42,13 +42,30 @@ namespace keepr.Services
     internal string DeleteVaultKeep(int id, Profile userInfo)
     {
       VaultKeep toDelete = _repo.GetKeepById(id);
-      if (toDelete.CreatorId == userInfo.Id)
+      if(toDelete == null)
       {
-        _repo.DeleteVaultKeep(id);
-        return "Vault Keep deleted";
+        throw new Exception("No Vault Keep with that ID");
       }
-      return "Vault Keep could not be deleted";
+      else if(toDelete.CreatorId != userInfo.Id)
+      {
+        throw new Exception("You do not own this Vault keep, cannot delete");
+      }
+      else if(_repo.DeleteVaultKeep(id))
+      {
+        return "Deleted";
+      }
+      else
+      {
+        return "Error";
+      }
     }
+  //   if (toDelete.CreatorId == userInfo.Id)
+  //   {
+  //     _repo.DeleteVaultKeep(id);
+  //     return "Vault Keep deleted";
+  //   }
+  //   return "Vault Keep could not be deleted";
+  // }
 
     internal object EditVaultKeep(VaultKeep editedVaultKeep, Profile userInfo)
     {

@@ -23,28 +23,68 @@ namespace keepr.Services
 
     internal IEnumerable<Vault> GetVaults(string profileId)
     {
-      return _repo.GetVaults(profileId).ToList().FindAll(v => v.CreatorId == profileId || v.IsPrivate == false);
+      return _repo.GetVaults(profileId).ToList().FindAll(v => v.CreatorId == profileId || !v.IsPrivate);
     }
 
-    internal Vault GetVaultById(int id, string profileId)
+    internal Vault GetVaultById(int id)
     {
-      Vault found = _repo.GetVaultById(id);
-      if (found.CreatorId != profileId && found.IsPrivate == true)
+      Vault foundVault = _repo.GetVaultById(id);
+      if (foundVault == null)
       {
-          throw new Exception("This is a private vault");
+        throw new Exception("This Vault doesn't exist");
       }
-      return _repo.GetVaultById(id);
+      if (foundVault.IsPrivate)
+      {
+        throw new Exception("This Vault is Private");
+      }
+      return foundVault;
+
+      // Vault found = _repo.GetVaultById(id);
+      // if(found == null)
+      // {
+      //   throw new Exception("No vault by that ID");
+      // }
+      // else if(!found.IsPrivate || found.CreatorId == userInfo.Id)
+      // {
+      //   return found;
+      // }
+      // else 
+      // {
+      //   throw new Exception("No vaults for you");
+      // }
+
+      // if (found.CreatorId != profileId && found.IsPrivate == true)
+      // {
+      //     throw new Exception("This is a private vault");
+      // }
+      // return _repo.GetVaultById(id);
     }
 
     internal string DeleteVault(int id, Profile userInfo)
     {
       Vault toDelete = _repo.GetVaultById(id);
-      if(toDelete.CreatorId == userInfo.Id)
+      if(toDelete == null)
       {
-        _repo.DeleteVault(id);
-        return "The Vault has been deleted";
+        throw new Exception("could not be found");
       }
-      return "The Vault could not be deleted";
+      if(toDelete.CreatorId != userInfo.Id)
+      {
+        throw new Exception("You are not the original poster of this vault, access denied");
+      }
+      if(_repo.DeleteVault(id))
+      {
+        return "Deleted";
+      }
+      else
+      {
+        return "Could not delete";
+      }
+      // if(toDelete.CreatorId = userInfo.Id)
+      // {
+      //   _repo.DeleteVault(id);
+      //   return "The Vault has been deleted";
+      // }
+      // return "The Vault could not be deleted";
     }
 
     internal Vault EditVault(Profile userInfo, Vault editedVault)

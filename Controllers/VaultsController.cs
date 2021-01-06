@@ -52,13 +52,26 @@ namespace keepr.Controllers
         }
         }
 
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<Vault>> GetVaultById(int id)
+        // {
+        //     try
+        //     {
+        //         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        //         return Ok(_vs.GetVaultById(id, userInfo));
+        //     }
+        //     catch (System.Exception e)
+        //     {
+        //         return BadRequest(e.Message);
+        //     }
+        // }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<Vault>> GetVaultById(int id)
+        public ActionResult<Vault> GetVaultById(int id)
         {
             try
             {
-                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-                return Ok(_vs.GetVaultById(id, userInfo?.Id));
+                return Ok(_vs.GetVaultById(id));
             }
             catch (System.Exception e)
             {

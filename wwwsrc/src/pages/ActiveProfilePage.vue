@@ -6,7 +6,7 @@
       </div>
       <div class="col-2">
         <h1>{{ activeProfile.name }}</h1>
-        <div class="row d-flex flex-column">
+        <div class="row text-start d-flex flex-column">
           <div class="col pt-4 pl-4">
             <h5>Keeps: {{ keeps.length }} </h5>
           </div>
@@ -17,8 +17,8 @@
       </div>
     </div>
     <div class="row">
+      <h1>Keeps: </h1>
       <div class="card-columns">
-        <h5>Keeps: </h5>
         <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
       </div>
       <div v-if="profile.id == activeProfile.id">
@@ -26,11 +26,11 @@
       </div>
     </div>
     <div class="row ml-1">
-      <h5>Vaults: </h5>
+      <h1>Vaults: </h1>
+      <vaults-component v-for="v in vaults" :key="v" :vaults-prop="v" />
       <div v-if="profile.id == activeProfile.id">
         <new-vault-component />
       </div>
-      <vaults-component v-for="v in vaults" :key="v" :vaults-prop="v" />
     </div>
   </div>
 </template>

@@ -1,13 +1,17 @@
 <template>
-  <div class="active-vault container-fluid row">
-    <div class=" my-2 text-center">
-      <div class="col-4">
-        <h2>{{ activeVault.name }}</h2>
-        <p>{{ activeVault.description }}</p>
-        <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)">
-          <h5>Delete test</h5>
-        </button>
-        <div class="col-4">
+  <div class="active-vault container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <div class=" my-2 text-center">
+          <div class="col-4">
+            <h2>{{ activeVault.name }}</h2>
+            <p>{{ activeVault.description }}</p>
+            <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)">
+              <h5>Delete test</h5>
+            </button>
+            <div class="col-4">
+            </div>
+          </div>
         </div>
       </div>
     </div>
