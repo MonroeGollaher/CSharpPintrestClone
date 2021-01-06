@@ -97,7 +97,7 @@
                 </button>
               </div>
               <div class="col-3">
-                <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}">
+                <router-link :to="{ name: 'ActiveProfile', params: { profileId: keep.creator.id }}" @click="setActiveKeep(keep.id)">
                   <img :src="keep.creator.picture" class="rounded-circle img-fluid" />
                 </router-link>
               </div>
@@ -116,6 +116,8 @@ import { vaultsService } from '../services/VaultsService'
 import { vaultKeepsService } from '../services/VaultKeepsService'
 import { AppState } from '../AppState'
 import $ from 'jquery'
+import Swal from 'sweetalert2'
+
 export default {
   name: 'KeepsComponent',
   props: ['keepsProp'],
@@ -144,7 +146,26 @@ export default {
         $('#activeKeepModal').modal('hide')
       },
       deleteKeep(keepId) {
-        keepsService.deleteKeep(keepId)
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            keepsService.deleteKeep(keepId)
+            // eslint-disable-next-line no-undef
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }
+        })
+        // keepsService.deleteKeep(keepId)
         $('#activeKeepModal').modal('hide')
       },
       viewCount(keepId, keep) {
@@ -164,5 +185,9 @@ export default {
   height: 300px;
   background-size: cover;
   background-position: center;
+}
+img:hover {
+  opacity: 0.5;
+  transition:all 1s ease;
 }
 </style>

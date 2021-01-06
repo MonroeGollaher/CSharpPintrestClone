@@ -79,6 +79,7 @@ export default {
         vaultsService.createVault(newVault)
         state.newVault = {}
         $('#newVaultModal').modal('hide')
+        vaultsService.getVaults()
       }
     }
   },

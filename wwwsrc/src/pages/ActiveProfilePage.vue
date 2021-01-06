@@ -62,16 +62,22 @@ export default {
   components: { KeepsComponent, NewVaultComponent, NewKeepComponent, VaultsComponent },
   setup() {
     const route = useRoute()
-    onMounted(() => {
-      profileService.getActiveProfile(route.params.profileId)
-      keepsService.getKeepsByProfile(route.params.profileId)
-      vaultsService.getVaultsByProfile(route.params.profileId)
+    onMounted(async() => {
+      await keepsService.getKeeps()
+      await vaultsService.getVaults()
+      await profileService.getActiveProfile(route.params.profileId)
+      await keepsService.getKeepsByProfile(route.params.profileId)
+      await vaultsService.getVaultsByProfile(route.params.profileId)
     })
     return {
       profile: computed(() => AppState.profile),
       activeProfile: computed(() => AppState.activeProfile),
       keeps: computed(() => AppState.activeProfileKeeps),
+      // keeps: computed(() => AppState.keeps.filter(k => k.creatorId === AppState.activeProfile.id || k.creatorId === AppState.profile.id)),
+      // keeps: computed(() => AppState.keeps.filter(k => k.creatorId === AppState.profile.id)),
+      // vaults: computed(() => AppState.activeProfileVaults)
       vaults: computed(() => AppState.activeProfileVaults)
+      // vaults: computed(() => AppState.activeProfileVaults)
     }
   }
 }

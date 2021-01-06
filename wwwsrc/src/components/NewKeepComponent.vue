@@ -79,6 +79,7 @@ export default {
         keepsService.addKeep(state.newKeep)
         state.newKeep = {}
         $('#newKeepModal').modal('hide')
+        keepsService.getKeeps()
       }
     }
   },

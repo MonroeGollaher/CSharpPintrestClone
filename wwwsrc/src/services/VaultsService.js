@@ -35,7 +35,7 @@ class VaultsService {
   async createVault(vaultData) {
     try {
       await api.post('api/vaults', vaultData)
-      console.log(vaultData)
+      // console.log(vaultData)
       this.getVaults()
     } catch (error) {
       logger.error(error)
