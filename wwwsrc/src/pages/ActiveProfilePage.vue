@@ -1,35 +1,46 @@
 <template>
   <div class="active-profile-page container-fluid">
-    <div class="row pt-4 pl-4">
+    <div class="row pt-4 profArea">
       <div class="col-2 ">
-        <img :src="activeProfile.picture" class="img-fluid" />
+        <img :src="activeProfile.picture" class="img-fluid rounded-circle" />
       </div>
       <div class="col-2">
         <h1>{{ activeProfile.name }}</h1>
-        <div class="row text-start d-flex flex-column">
-          <div class="col pt-4 pl-4">
-            <h5>Keeps: {{ keeps.length }} </h5>
+        <div class="row d-flex flex-column">
+          <div class="col">
+            <p class="lead">
+              Vaults: {{ vaults.length }}
+            </p>
           </div>
           <div class="col">
-            <h5>Vaults: {{ vaults.length }} </h5>
+            <p class="lead">
+              Keeps: {{ keeps.length }}
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <h1>Keeps: </h1>
+    <div class="row main-area">
+      <h1>
+        Keeps: <button v-if="profile.id == activeProfile.id" class="btn border-0">
+          <new-keep-component />
+        </button>
+      </h1>
+    </div>
+    <div class="row main-area">
       <div class="card-columns">
         <keeps-component v-for="k in keeps" :key="k" :keeps-prop="k" />
       </div>
-      <div v-if="profile.id == activeProfile.id">
-        <new-keep-component />
-      </div>
     </div>
-    <div class="row ml-1">
+    <div class="row main-area">
       <h1>Vaults: </h1>
-      <vaults-component v-for="v in vaults" :key="v" :vaults-prop="v" />
       <div v-if="profile.id == activeProfile.id">
         <new-vault-component />
+      </div>
+    </div>
+    <div class="row main-area d-flex">
+      <div class="card-columns">
+        <vaults-component v-for="v in vaults" :key="v" :vaults-prop="v" />
       </div>
     </div>
   </div>
@@ -45,9 +56,10 @@ import KeepsComponent from '../components/KeepsComponent'
 import { vaultsService } from '../services/VaultsService'
 import NewVaultComponent from '../components/NewVaultComponent'
 import NewKeepComponent from '../components/NewKeepComponent'
+import VaultsComponent from '../components/VaultsComponent'
 export default {
   name: 'ActiveProfilePage',
-  components: { KeepsComponent, NewVaultComponent, NewKeepComponent },
+  components: { KeepsComponent, NewVaultComponent, NewKeepComponent, VaultsComponent },
   setup() {
     const route = useRoute()
     onMounted(() => {
@@ -66,5 +78,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.main-area{
+  user-select: none;
+  margin-left: 5%;
+  margin-right: 15%;
+  > img{
+    height: 100px;
+    width: 100px;
+  }
+}
 
+.profArea {
+  margin-left: 5%;
+}
 </style>

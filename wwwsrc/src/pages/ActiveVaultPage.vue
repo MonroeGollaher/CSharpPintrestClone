@@ -1,22 +1,19 @@
 <template>
   <div class="active-vault container-fluid">
-    <div class="row">
-      <div class="col-6">
-        <div class=" my-2 text-center">
-          <div class="col-4">
-            <h2>{{ activeVault.name }}</h2>
-            <p>{{ activeVault.description }}</p>
-            <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)">
-              <h5>Delete test</h5>
-            </button>
-            <div class="col-4">
-            </div>
-          </div>
+    <div class="row text-start p-4">
+      <div class="col-12">
+        <h2>
+          {{ activeVault.name }} <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)" class="btn border-0 bg-transparent">
+            <i class="fas fa-trash text-danger"></i>
+          </button>
+        </h2>
+        <p>{{ activeVault.description }}</p>
+      </div>
+      <div class="row pt-3">
+        <div class="card-columns">
+          <vault-keeps-component v-for="ak in activeKeeps" :key="ak.id" :vault-keep-prop="ak" />
         </div>
       </div>
-    </div>
-    <div class="row">
-      <vault-keeps-component v-for="ak in activeKeeps" :key="ak.id" :vault-keep-prop="ak" />
     </div>
   </div>
 </template>

@@ -1,11 +1,9 @@
 <template>
-  <div class="vault-keeps-component container-fluid">
-    <div class="col-6 d-flex">
-      <img :src="vaultKeepProp.img" class="img-fluid" />
-      <button @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
-        <p>Remove from vault<i class="far fa-trash-alt ml-1"></i></p>
-      </button>
-    </div>
+  <div class="vault-keeps-component card container-fluid">
+    <img :src="vaultKeepProp.img" class="img-fluid card-img" />
+    <button v-if="vaultKeepProp.CreatorId == profile.id" @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
+      <p>Remove from vault<i class="far fa-trash-alt ml-1"></i></p>
+    </button>
   </div>
 </template>
 

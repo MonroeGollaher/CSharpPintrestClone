@@ -64,6 +64,7 @@
 <script>
 import { reactive } from 'vue'
 import { keepsService } from '../services/KeepsService'
+import $ from 'jquery'
 export default {
   name: 'NewKeepComponent',
   setup() {
@@ -77,6 +78,7 @@ export default {
       createKeep() {
         keepsService.addKeep(state.newKeep)
         state.newKeep = {}
+        $('#newKeepModal').modal('hide')
       }
     }
   },

@@ -62,6 +62,7 @@
 <script>
 import { reactive } from 'vue'
 import { vaultsService } from '../services/VaultsService'
+import $ from 'jquery'
 export default {
   name: 'NewVaultComponent',
   setup() {
@@ -77,6 +78,7 @@ export default {
       createVault(newVault) {
         vaultsService.createVault(newVault)
         state.newVault = {}
+        $('#newVaultModal').modal('hide')
       }
     }
   },

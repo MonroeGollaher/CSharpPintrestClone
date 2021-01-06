@@ -141,9 +141,11 @@ export default {
           keepId: keepId
         }
         vaultKeepsService.addKeepToVault(newKeep)
+        $('#activeKeepModal').modal('hide')
       },
       deleteKeep(keepId) {
         keepsService.deleteKeep(keepId)
+        $('#activeKeepModal').modal('hide')
       },
       viewCount(keepId, keep) {
         keepsService.viewCount(keepId, keep)
