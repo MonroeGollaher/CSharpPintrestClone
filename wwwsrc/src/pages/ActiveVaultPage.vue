@@ -1,8 +1,9 @@
 <template>
-  <div class="active-vault container-fluid">
-    <div class="row">
+  <div class="active-vault container-fluid row">
+    <div class=" my-2 text-center">
       <div class="col-4">
-        <h2>{{ activeVault.title }}</h2>
+        <h2>{{ activeVault.name }}</h2>
+        <p>{{ activeVault.description }}</p>
         <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)">
           <h5>Delete test</h5>
         </button>

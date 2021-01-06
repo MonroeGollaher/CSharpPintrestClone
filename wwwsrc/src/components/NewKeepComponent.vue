@@ -32,7 +32,7 @@
                      id="imageUrl"
                      aria-describedby="imageUrl"
                      placeholder="URL..."
-                     v-model="state.newKeep.image"
+                     v-model="state.newKeep.img"
               >
             </div>
             <div class="form-group">

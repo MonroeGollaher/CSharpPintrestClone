@@ -1,7 +1,7 @@
 <template>
   <div class="vault-keeps-component container-fluid">
     <div class="col-6 d-flex">
-      <img :src="vaultKeepProp.image" class="img-fluid" />
+      <img :src="vaultKeepProp.img" class="img-fluid" />
       <button @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
         <p>Remove from vault<i class="far fa-trash-alt ml-1"></i></p>
       </button>

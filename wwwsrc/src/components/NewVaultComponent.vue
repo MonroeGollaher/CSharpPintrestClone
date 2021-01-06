@@ -22,10 +22,10 @@
                      id="listTitle"
                      aria-describedby="listTitle"
                      placeholder="What's your vault called?"
-                     v-model="state.newVault.title"
+                     v-model="state.newVault.name"
               >
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="itemTitle">Image URL</label>
               <input type="text"
                      class="form-control"
@@ -33,7 +33,7 @@
                      aria-describedby="listTitle"
                      v-model="state.newVault.image"
               >
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="itemTitle">Description</label>
               <input type="text"

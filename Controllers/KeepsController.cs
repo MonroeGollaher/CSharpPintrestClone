@@ -70,7 +70,7 @@ namespace keepr.Controllers
             try
             {
                 Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-                return Ok(_ks.DeleteKeep(id, userInfo));
+                return Ok(_ks.DeleteKeep(id, userInfo.Id));
             }
             catch (System.Exception error)
             {

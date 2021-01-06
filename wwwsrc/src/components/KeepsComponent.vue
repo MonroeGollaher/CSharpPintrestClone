@@ -1,6 +1,6 @@
 <template>
   <div class="keeps-component container-fluid card" @click="viewCount(keep.id, keep)" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
-    <img class="card-img" :src="keep.image">
+    <img class="card-img" :src="keep.img">
     <div class="card-img-overlay d-flex justify-content-between flex-column">
       <h4 class="card-title text-light text-center">
         {{ keep.name }}
@@ -9,7 +9,7 @@
         <img :src="keep.creator.picture" class="rounded-circle creator-pic" height="40" width="40">
       </div>
     </div>
-    <!-- <div class="keeps keepImage" :style="'background-image: url('+keep.image+')'" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
+    <!-- <div class="keeps keepImage" :style="'background-image: url('+keep.img+')'" data-toggle="modal" :data-target="'#activeKeepModal' + keep.id">
       <img :src="keep.creator.picture" class="rounded-circle shadow" height="40">
       <h4 class="text-light">
         {{ keep.name }}
@@ -29,7 +29,7 @@
       <div class="modal-content">
         <div class="row">
           <div class="col-6">
-            <img :src="keep.image" class="img-fluid" />
+            <img :src="keep.img" class="img-fluid" />
           </div>
           <div class="col-6 text-center">
             <div class="row">
@@ -68,7 +68,7 @@
                         Select a vault
                       </option>
                       <option @click="keptCount(keep, keep.id)" v-for="v in vaults" :key="v.id" :value="v.id">
-                        {{ v.title }}
+                        {{ v.name }}
                       </option>
                     </select>
                   </div>

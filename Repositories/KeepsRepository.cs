@@ -18,9 +18,9 @@ namespace keepr.Repositories
     {
       string sql = @"
       INSERT INTO keeps
-      (id, creatorId, name, description, image, views, shares, keeps)
+      (id, creatorId, name, description, img, views, shares, keeps)
       VALUES
-      (@Id, @CreatorId, @Name, @Description, @Image, @Views, @Shares, @Keeps);
+      (@Id, @CreatorId, @Name, @Description, @Img, @Views, @Shares, @Keeps);
       SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newKeep);
     }
@@ -51,7 +51,7 @@ namespace keepr.Repositories
       SET
       name = @Name,
       description = @Description,
-      image = @Image,
+      img = @Img,
       views = @Views,
       shares = @Shares,
       keeps = @Keeps
@@ -62,11 +62,11 @@ namespace keepr.Repositories
     internal IEnumerable<Keep> GetKeepsByProfile(string profileId)
     {
       string sql = @"
-      SELECT keep.*,
+      SELECT
+      keep.*,
       p.*
       FROM keeps keep
-      JOIN profiles p
-      ON keep.creatorId = p.id
+      JOIN profiles p ON keep.creatorId = p.id
       WHERE keep.creatorId = @profileId;";
       return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { profileId }, splitOn: "id");
     }

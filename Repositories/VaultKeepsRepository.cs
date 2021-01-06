@@ -16,14 +16,15 @@ namespace keepr.Repositories
     public int CreateVaultKeep(VaultKeep newVk)
     {
       string sql = @"
+      UPDATE keeps 
+      SET keeps = keeps+1 
+      WHERE id = @KeepId;
       INSERT INTO vaultKeeps
       (vaultId, keepId, creatorId, id)
       VALUES
       (@VaultId, @KeepId, @CreatorId, @Id);
-      SELECT LAST_INSERT_ID()
-      UPDATE keeps 
-      SET Keeps = Keeps+1 
-      WHERE id = @KeepId;";
+      SELECT LAST_INSERT_ID()npm";
+      
       return _db.ExecuteScalar<int>(sql, newVk);
     }
 

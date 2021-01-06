@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using keepr.Models;
 using keepr.Repositories;
@@ -28,15 +29,21 @@ namespace keepr.Services
       return _repo.GetKeepById(id);
     }
 
-    internal string DeleteKeep(int id, Profile userInfo)
+    internal string DeleteKeep(int id, string profileId)
     {
       Keep toDelete = _repo.GetKeepById(id);
-      if(toDelete.CreatorId == userInfo.Id)
+      if(profileId != toDelete.CreatorId)
       {
-        _repo.DeleteKeep(id);
-        return "The Keep has been deleted";
+        throw new Exception("access denied");
       }
-      return "The Keep could not be deleted";
+      if(_repo.DeleteKeep(id))
+      {
+        return "Success";
+      }
+      else
+      {
+        throw new Exception("Invalid");
+      }
     }
 
     internal Keep EditKeep(Profile userInfo, Keep editedKeep)
@@ -55,7 +62,7 @@ namespace keepr.Services
 
     }
 
-    internal object GetKeepsByProfile(string profId, string userId)
+    internal IEnumerable<Keep> GetKeepsByProfile(string profId, string userId)
     {
       return _repo.GetKeepsByProfile(profId).ToList().FindAll(k => k.CreatorId == userId || k.CreatorId == profId);
     }

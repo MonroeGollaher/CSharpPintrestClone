@@ -18,9 +18,9 @@ namespace keepr.Repositories
     {
       string sql = @"
       INSERT INTO vaults
-      (id, creatorId, title, description, isPrivate)
+      (id, creatorId, name, description, isPrivate)
       VALUES
-      (@Id, @CreatorId, @Title, @Description, @IsPrivate);
+      (@Id, @CreatorId, @Name, @Description, @IsPrivate);
       SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newVault);
     }
@@ -35,10 +35,10 @@ namespace keepr.Repositories
       return affectedRows > 0;
     }
 
-    internal object GetVaults()
+    internal IEnumerable<Vault> GetVaults(string profileId)
     {
       string sql = populateCreator;
-      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, splitOn: "id");
+      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, new { profileId }, splitOn: "id");
     }
 
     internal void EditVault(Vault editedVault)

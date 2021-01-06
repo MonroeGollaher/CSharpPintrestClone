@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using keepr.Models;
 using keepr.Repositories;
@@ -8,9 +9,11 @@ namespace keepr.Services
   public class VaultsService
   {
     private readonly VaultsRespository _repo;
-    public VaultsService(VaultsRespository repo)
+    private readonly ProfileRepository _profRepo;
+    public VaultsService(VaultsRespository repo, ProfileRepository profRepo)
     {
         _repo = repo;
+        _profRepo = profRepo;
     }
     internal Vault CreateVault(Vault newVault)
     {
@@ -18,13 +21,18 @@ namespace keepr.Services
       return newVault;
     }
 
-    internal object GetVaults()
+    internal IEnumerable<Vault> GetVaults(string profileId)
     {
-      return _repo.GetVaults();
+      return _repo.GetVaults(profileId).ToList().FindAll(v => v.CreatorId == profileId || v.IsPrivate == false);
     }
 
-    internal Vault GetVaultById(int id)
+    internal Vault GetVaultById(int id, string profileId)
     {
+      Vault found = _repo.GetVaultById(id);
+      if (found.CreatorId != profileId && found.IsPrivate == true)
+      {
+          throw new Exception("This is a private vault");
+      }
       return _repo.GetVaultById(id);
     }
 

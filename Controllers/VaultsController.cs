@@ -39,24 +39,26 @@ namespace keepr.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Vault>> GetVaults()
+        public async Task<ActionResult<Vault>> GetVaults()
         {
-            try
-            {
-                return Ok(_vs.GetVaults());
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+        try
+        {
+            Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+            return Ok(_vs.GetVaults(userInfo.Id));
+        }
+        catch (System.Exception error)
+        {
+            return BadRequest(error.Message);
+        }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<Keep>> GetVaultById(int id)
+        public async Task<ActionResult<Vault>> GetVaultById(int id)
         {
             try
             {
-                return Ok(_vs.GetVaultById(id));
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                return Ok(_vs.GetVaultById(id, userInfo?.Id));
             }
             catch (System.Exception e)
             {

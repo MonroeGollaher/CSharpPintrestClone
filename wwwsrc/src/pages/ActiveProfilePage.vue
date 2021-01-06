@@ -1,13 +1,13 @@
 <template>
   <div class="active-profile-page container-fluid">
-    <div class="row">
-      <div class="col-2">
+    <div class="row pt-4 pl-4">
+      <div class="col-2 ">
         <img :src="activeProfile.picture" class="img-fluid" />
       </div>
       <div class="col-2">
-        <h1>{{ activeProfile.name }} </h1>
+        <h1>{{ activeProfile.name }}</h1>
         <div class="row d-flex flex-column">
-          <div class="col">
+          <div class="col pt-4 pl-4">
             <h5>Keeps: {{ keeps.length }} </h5>
           </div>
           <div class="col">
@@ -51,9 +51,9 @@ export default {
   setup() {
     const route = useRoute()
     onMounted(() => {
+      profileService.getActiveProfile(route.params.profileId)
       keepsService.getKeepsByProfile(route.params.profileId)
       vaultsService.getVaultsByProfile(route.params.profileId)
-      profileService.getActiveProfile(route.params.profileId)
     })
     return {
       profile: computed(() => AppState.profile),
