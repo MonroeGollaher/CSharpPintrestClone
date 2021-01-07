@@ -5,7 +5,6 @@ class KeepsService {
   async getKeeps() {
     try {
       const res = await api.get('api/keeps')
-      // console.log(res.data)
       AppState.keeps = res.data
     } catch (error) {
       logger.error(error)
@@ -25,7 +24,6 @@ class KeepsService {
   async getKeepsByProfile(id) {
     try {
       const res = await api.get('api/profile/' + id + '/keeps')
-      console.log(res.data, 'profile keeps')
       AppState.activeProfileKeeps = res.data
     } catch (error) {
       logger.error(error)

@@ -26,38 +26,33 @@ namespace keepr.Services
       return _repo.GetVaults(profileId).ToList().FindAll(v => v.CreatorId == profileId || !v.IsPrivate);
     }
 
-    internal Vault GetVaultById(int id)
+    internal Vault GetVaultById(int id, string userId)
     {
       Vault foundVault = _repo.GetVaultById(id);
+      Profile creator = _profRepo.GetProfileById(foundVault.CreatorId);
+      foundVault.Creator = creator;
+
       if (foundVault == null)
       {
-        throw new Exception("This Vault doesn't exist");
+        throw new Exception("No vault could be found with that.");
       }
-      if (foundVault.IsPrivate)
+
+      if (foundVault.CreatorId == userId && foundVault.IsPrivate == true)
       {
-        throw new Exception("This Vault is Private");
+        return foundVault;
       }
+
+      if (foundVault.IsPrivate == false)
+      {
+        return foundVault;
+      }
+
+      if (foundVault.CreatorId != userId && foundVault.IsPrivate == true)
+      {
+        throw new Exception("This vault is private.");
+      }
+
       return foundVault;
-
-      // Vault found = _repo.GetVaultById(id);
-      // if(found == null)
-      // {
-      //   throw new Exception("No vault by that ID");
-      // }
-      // else if(!found.IsPrivate || found.CreatorId == userInfo.Id)
-      // {
-      //   return found;
-      // }
-      // else 
-      // {
-      //   throw new Exception("No vaults for you");
-      // }
-
-      // if (found.CreatorId != profileId && found.IsPrivate == true)
-      // {
-      //     throw new Exception("This is a private vault");
-      // }
-      // return _repo.GetVaultById(id);
     }
 
     internal string DeleteVault(int id, Profile userInfo)
@@ -79,12 +74,6 @@ namespace keepr.Services
       {
         return "Could not delete";
       }
-      // if(toDelete.CreatorId = userInfo.Id)
-      // {
-      //   _repo.DeleteVault(id);
-      //   return "The Vault has been deleted";
-      // }
-      // return "The Vault could not be deleted";
     }
 
     internal Vault EditVault(Profile userInfo, Vault editedVault)

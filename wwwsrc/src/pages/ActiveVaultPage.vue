@@ -1,13 +1,20 @@
 <template>
   <div class="active-vault container-fluid">
-    <div class="row text-start p-4">
-      <div class="col-12">
-        <h2>
-          {{ activeVault.name }} <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)" class="btn border-0 bg-transparent">
+    <div class="row text-start main-area pt-4">
+      <div class="col-10">
+        <h1>
+          {{ activeVault.name }}
+        </h1>
+        <p>
+          {{ activeVault.description }} <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)" class="btn border-0 bg-transparent">
+            <i class="far fa-trash-alt ml-1 text-danger"></i>
+          </button>
+        </p>
+        <!-- <div class="col-2">
+          <button v-if="profile.id == activeVault.creatorId" @click="removeVault(activeVault.id)" class="btn border-0 bg-transparent">
             <i class="fas fa-trash text-danger"></i>
           </button>
-        </h2>
-        <p>{{ activeVault.description }}</p>
+        </div> -->
       </div>
       <div class="row pt-3">
         <div class="card-columns">
@@ -35,10 +42,11 @@ export default {
   setup() {
     const route = useRoute()
     onMounted(async() => {
+      await vaultsService.setActiveVault(route.params.vaultId)
       await vaultsService.getVaults()
-      keepsService.getKeeps()
-      vaultKeepsService.getActiveVaultKeeps(route.params.vaultId)
-      vaultKeepsService.getAllVaultKeeps()
+      await keepsService.getKeeps()
+      await vaultKeepsService.getActiveVaultKeeps(route.params.vaultId)
+      await vaultKeepsService.getAllVaultKeeps()
     })
     return {
       profile: computed(() => AppState.profile),
@@ -56,8 +64,7 @@ export default {
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
           if (result.isConfirmed) {
-            vaultsService.deleteKeep(vaultId)
-            // eslint-disable-next-line no-undef
+            vaultsService.deleteVault(vaultId)
             Swal.fire(
               'Deleted!',
               'Your file has been deleted.',
@@ -65,7 +72,6 @@ export default {
             )
           }
         })
-        // $('#activeKeepModal').modal('hide')
       }
     }
   }
@@ -73,5 +79,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.main-area{
+  user-select: none;
+  margin-left: 5%;
+  margin-right: 15%;
+  /* > img{
+    height: 100px;
+    width: 100px;
+  } */
+}
 </style>

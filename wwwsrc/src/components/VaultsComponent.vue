@@ -2,7 +2,7 @@
   <div class="vaults-component shadow card container-fluid">
     <div class="row">
       <div class="col-12 vault">
-        <div class="text-center">
+        <div class="text-center" @click="setActiveVault(vault.id)">
           <router-link :to="{name: 'ActiveVault', params: {vaultId: vault.id}}" @click="setActiveVault(vault.id)">
             <h5>{{ vault.name }}</h5>
           </router-link>

@@ -32,7 +32,6 @@ class VaultKeepsService {
 
   async removeVaultKeep(vaultId) {
     try {
-      // debugger
       await api.delete('api/vaultkeeps/' + vaultId)
       this.getActiveVaultKeeps(vaultId)
     } catch (error) {

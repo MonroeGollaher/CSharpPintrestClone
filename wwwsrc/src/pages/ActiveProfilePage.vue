@@ -65,6 +65,7 @@ export default {
     onMounted(async() => {
       await keepsService.getKeeps()
       await vaultsService.getVaults()
+      await profileService.getProfile()
       await profileService.getActiveProfile(route.params.profileId)
       await keepsService.getKeepsByProfile(route.params.profileId)
       await vaultsService.getVaultsByProfile(route.params.profileId)
@@ -73,11 +74,12 @@ export default {
       profile: computed(() => AppState.profile),
       activeProfile: computed(() => AppState.activeProfile),
       keeps: computed(() => AppState.activeProfileKeeps),
-      // keeps: computed(() => AppState.keeps.filter(k => k.creatorId === AppState.activeProfile.id || k.creatorId === AppState.profile.id)),
+      vaults: computed(() => AppState.activeProfileVaults),
+      // keeps: computed(() => AppState.keeps.filter(k => k.creatorId === AppState.activeProfile.id)),
       // keeps: computed(() => AppState.keeps.filter(k => k.creatorId === AppState.profile.id)),
-      // vaults: computed(() => AppState.activeProfileVaults)
-      vaults: computed(() => AppState.activeProfileVaults)
-      // vaults: computed(() => AppState.activeProfileVaults)
+      // vaults: computed(() => AppState.vaults.filter(v => v.isPrivate === false)),
+      // vaults: computed(() => AppState.vaults.filter(v => v.creatorId === AppState.activeProfile.id)),
+      profileVaults: computed(() => AppState.vaults)
     }
   }
 }

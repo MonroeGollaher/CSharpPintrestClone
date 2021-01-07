@@ -1,9 +1,11 @@
 <template>
   <div class="vault-keeps-component card container-fluid" data-toggle="modal">
     <img :src="vaultKeepProp.img" class="img-fluid card-img" :data-target="'#activeKeepModal' + vaultKeepProp.id" />
-    <button v-if="vaultKeepProp.creatorId == profile.id" @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
-      <p>Remove from vault<i class="far fa-trash-alt ml-1"></i></p>
-    </button>
+    <div class="card-img-overlay justify-content-start">
+      <button v-if="vaultKeepProp.creatorId == profile.id" @click="removeFromVault(vaultKeepProp.vaultKeepId)" class="btn border-0 bg-transparent text-danger">
+        <i class="far fa-trash-alt ml-1"></i>
+      </button>
+    </div>
   </div>
   <!-- <div class="modal fade keepModal"
        :id="'activeKeepModal' + vaultKeepProp.id"
@@ -118,7 +120,7 @@ export default {
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
           if (result.isConfirmed) {
-            vaultKeepsService.deleteKeep(vaultId)
+            vaultKeepsService.removeVaultKeep(vaultId)
             // eslint-disable-next-line no-undef
             Swal.fire(
               'Deleted!',
@@ -127,7 +129,7 @@ export default {
             )
           }
         })
-        // vaultKeepsService.removeVaultKeep(vaultId)
+        vaultKeepsService.removeVaultKeep(vaultId)
       }
     }
   },
@@ -139,5 +141,6 @@ export default {
 img {
     width: 300px;
     height: 300px;
+    object-fit: cover;
 }
 </style>

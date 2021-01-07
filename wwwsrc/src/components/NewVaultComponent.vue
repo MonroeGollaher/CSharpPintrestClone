@@ -68,7 +68,7 @@ export default {
   setup() {
     const state = reactive({
       newVault: {
-        title: null,
+        name: null,
         description: null,
         isPrivate: false
       }
@@ -76,6 +76,7 @@ export default {
     return {
       state,
       createVault(newVault) {
+        debugger
         vaultsService.createVault(newVault)
         state.newVault = {}
         $('#newVaultModal').modal('hide')
